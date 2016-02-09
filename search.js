@@ -1,6 +1,5 @@
 var fs = require('fs')
 var path = require('path')
-var os = require('os')
 
 var search = function (dir, extension, size, callback) {
 	//results is the final list of files meeting requirements 
