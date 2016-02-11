@@ -35,37 +35,18 @@ function SayHello(url) {
 
 var greetingPromise = SayHello('http://google.com')
 greetingPromise.then(function(res){
-    // console.log("we got it", res)
+    //console.log("we got it", res)
 }, function (rej) {
-    //console.err('we dont got it', rej)
+    console.err('we dont got it', rej)
 })
 
-var testo = [1,2,3]
-console.log('original is',testo)
 
-var doubles = testo.map(function(number){
-    return number * 2
-})
+var test = [1,2,3]
+var newarr = test.map(function(current, index, array){
+    current += 1
+},[])
 
-console.log(doubles)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(newarr)
 
 
 

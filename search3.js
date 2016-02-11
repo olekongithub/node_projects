@@ -1,14 +1,15 @@
 var fs = require('fs')
 var path = require('path')
-
+var Promise = require('bluebird')
+Promise.promisifyAll(fs)
 
 var search = function (dir, extension, size) {
+	console.time('search')
 	return new Promise(function(resolve, reject) {
 		//results is the final list of files meeting requirements 
 		var results = []
 
-		fs.readdir(dir, function (err, files) {
-			if (err) reject(err)
+		fs.readdirAsync(dir).then(function (files) {
 			var filenum = files.length
 			
 			//if no items in directory return
@@ -19,10 +20,11 @@ var search = function (dir, extension, size) {
 				var newpath = path.resolve(dir, file)
 				console.log("Currently testing:", newpath)
 				
-				fs.lstat(newpath, function (err, stats) {
-				
+				fs.lstatAsync(newpath).then( function (stats) {
+					
 					//run recursively if item is a directory 
 					if ( stats && stats.isDirectory() ){
+						
 						search(newpath,extension,size).then(function(files){
 							//add these files to results!
 							results = results.concat(files)
@@ -53,11 +55,12 @@ file extension to search for
 minimum size of file in bytes
 */
 
-search(process.env.HOME,'.js', 100000).then(
+search(process.env.HOME,'.js', 200000).then(
 	function(searchresults) {
 	  	console.log('Final results:')
 	 	searchresults.forEach(function (item) {console.log(item)} )
 	  	console.log('Returned', searchresults.length, 'results')
+	  	console.timeEnd('search')
 })
 
 
