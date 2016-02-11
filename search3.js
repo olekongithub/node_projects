@@ -4,7 +4,7 @@ var Promise = require('bluebird')
 Promise.promisifyAll(fs)
 
 var search = function (dir, extension, size) {
-	console.time('search')
+	
 	return new Promise(function(resolve, reject) {
 		//results is the final list of files meeting requirements 
 		var results = []
@@ -29,7 +29,7 @@ var search = function (dir, extension, size) {
 							//add these files to results!
 							results = results.concat(files)
 							--filenum
-							if (!filenum) resolve(results)
+							if (!filenum) resolve(results)	
 						})
 					}
 					//if a file, check if file fits requirements
@@ -60,7 +60,7 @@ search(process.env.HOME,'.js', 200000).then(
 	  	console.log('Final results:')
 	 	searchresults.forEach(function (item) {console.log(item)} )
 	  	console.log('Returned', searchresults.length, 'results')
-	  	console.timeEnd('search')
+	  	
 })
 
 
